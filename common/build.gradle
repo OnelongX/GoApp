@@ -38,13 +38,7 @@ dependencies {
 // If you want to use Navi for providers
 //    compile 'com.trello.rxlifecycle2:rxlifecycle-navi:2.0.1'
     //compile 'com.hwangjr.rxbus:rxbus:2.0.0-beta'
-/*
-    compile 'com.jakewharton.rxbinding:rxbinding:1.0.0'
-    compile 'com.jakewharton.rxbinding:rxbinding-support-v4:1.0.0'
-    compile 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:1.0.0'
-    compile 'com.jakewharton.rxbinding:rxbinding-design:1.0.0'
-    compile 'com.jakewharton.rxbinding:rxbinding-recyclerview-v7:1.0.0'
-*/
+
     //tv兼容
     //compile 'com.jakewharton.rxbinding:rxbinding-leanback-v17:1.0.0'
     compile 'com.github.zhaokaiqiang.klog:library:1.6.0'

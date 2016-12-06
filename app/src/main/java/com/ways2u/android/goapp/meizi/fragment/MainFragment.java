@@ -7,6 +7,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 
 
+import com.trello.rxlifecycle2.android.FragmentEvent;
 import com.ways2u.android.goapp.R;
 import com.ways2u.android.goapp.base.BaseFragment;
 import com.ways2u.android.goapp.meizi.adapter.BaseRecyclerOnScrollListener;
@@ -104,6 +105,7 @@ public class MainFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 Meizi m = new Meizi(response);
                 // 加载图片缓存，并保存尺寸数据到meizi
                 Observable.just(m)
+                        .compose(MainFragment.this.<Meizi>bindUntilEvent(FragmentEvent.DESTROY))
                         .map(new Function<Meizi, Meizi>() {
                             @Override
                             public Meizi apply(Meizi meizi) {
