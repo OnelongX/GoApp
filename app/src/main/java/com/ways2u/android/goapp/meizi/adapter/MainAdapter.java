@@ -1,10 +1,10 @@
 package com.ways2u.android.goapp.meizi.adapter;
 
-import android.os.Bundle;
 import android.view.View;
 
 
 import com.ways2u.android.goapp.R;
+import com.ways2u.android.goapp.base.BaseRecyclerAdapter;
 import com.ways2u.android.goapp.meizi.model.Meizi;
 import com.ways2u.android.goapp.meizi.view.ScaleImageView;
 import com.ways2u.android.goapp.util.ImageLoader;
