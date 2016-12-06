@@ -26,21 +26,12 @@ public abstract class BaseFragment extends RxFragment implements View.OnClickLis
 	protected BaseActivity activity;
 	private View rootView;
 
-	private  long lastClickTime;
 	protected LayoutInflater inflater;
 
 	protected boolean hasLoad;//只加载一次
 	protected boolean hasPrepared;//
 
 
-	public  boolean isFastDoubleClick() {
-		long time = System.currentTimeMillis();
-		if (time - lastClickTime < 500) {
-			return true;
-		}
-		lastClickTime = time;
-		return false;
-	}
 /*
 	public void showProgressDialog(String message, boolean isCancelable) {
 		if (pd == null) {

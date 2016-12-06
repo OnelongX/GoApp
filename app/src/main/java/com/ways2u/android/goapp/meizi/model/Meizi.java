@@ -10,6 +10,7 @@ import java.util.List;
 public class Meizi {
 
     public Meizi(JSONObject jsonObject){
+
         error = jsonObject.optBoolean("error");
         results = new ArrayList<>();
         JSONArray jsonArray = jsonObject.optJSONArray("results");

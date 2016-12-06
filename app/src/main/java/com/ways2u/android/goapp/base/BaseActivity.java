@@ -28,7 +28,7 @@ import java.util.List;
  */
 public abstract class BaseActivity extends RxAppCompatActivity implements Finishable, OnClickListener {
 	private static int sStartedActivityCount;
-	private long lastClickTime;
+
 	private Toast toast;
 	private String TAG;
 
@@ -83,19 +83,6 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Finish
 		putFinishList(this);
 	}
 
-	/**
-	 * 防止两次连续点击，执行两次相同操 *
-	 *
-	 * @return
-	 */
-	public  boolean isFastDoubleClick() {
-		long time = System.currentTimeMillis();
-		if (time - lastClickTime < 500) {
-			return true;
-		}
-		lastClickTime = time;
-		return false;
-	}
 
 	public <T extends View> T find(@IdRes  int viewId) {
 		return (T) this.findViewById(viewId);

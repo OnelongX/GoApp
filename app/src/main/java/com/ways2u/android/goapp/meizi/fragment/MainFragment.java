@@ -102,6 +102,9 @@ public class MainFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
             @Override
             public void onSuccess(JSONObject response) {
+                if(response==null){
+                    return;
+                }
                 Meizi m = new Meizi(response);
                 // 加载图片缓存，并保存尺寸数据到meizi
                 Observable.just(m)
