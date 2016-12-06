@@ -7,12 +7,14 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.IdRes;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.socks.library.KLog;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.ways2u.android.net.util.NetContext;
 
@@ -26,20 +28,22 @@ import java.util.List;
  */
 public abstract class BaseActivity extends RxAppCompatActivity implements Finishable, OnClickListener {
 	private static int sStartedActivityCount;
-	private static long lastClickTime;
+	private long lastClickTime;
 	private Toast toast;
 	private String TAG;
 
 	/**
-	 *
+	 *向其发消息，在undateU(msg)里面回调
 	 */
 	protected MyHandler myHandler;
 	//public static long updateTime = 0;
-
 	//protected boolean needSync;
 	//protected View actionbarLayout;
 
-
+	//-----------------------------------------------------
+	/**
+	 * Activity list
+	 */
 	private static final List<Finishable> sfinishableList = new ArrayList<Finishable>();
 
 	public static void finishAll() {
@@ -65,7 +69,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Finish
 		sfinishableList.remove(f);
 	}
 
-
+	//-----------------------------------------------------
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -84,7 +88,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Finish
 	 *
 	 * @return
 	 */
-	public static boolean isFastDoubleClick() {
+	public  boolean isFastDoubleClick() {
 		long time = System.currentTimeMillis();
 		if (time - lastClickTime < 500) {
 			return true;
@@ -93,9 +97,13 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Finish
 		return false;
 	}
 
-	public <T extends View> T find(int viewId) {
+	public <T extends View> T find(@IdRes  int viewId) {
 		return (T) this.findViewById(viewId);
 	}
+
+	/**
+	 * 处理内存泄漏
+	 */
 	public static class MyHandler extends Handler {
 		WeakReference<BaseActivity> mActivity;
 		MyHandler(BaseActivity activity) {
@@ -115,9 +123,26 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Finish
 	 * @param msg
 	 */
 	public abstract void undateUI(Message msg);
+
+	/**
+	 * 视图xml resid
+	 * @return
+	 */
 	protected abstract int getLayoutId();
+
+	/**
+	 * 初始化view
+	 */
 	protected abstract void initView();
+
+	/**
+	 * 注册监听事件
+	 */
 	protected abstract void setListener();
+
+	/**
+	 * 初始化数据
+	 */
 	protected abstract void initData();
 
 
@@ -127,7 +152,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Finish
 	}
 
 	@Override
-	public void exit() {
+	final public void exit() {
 		try {
 			finish();
 		} catch (Exception e) {
@@ -164,10 +189,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Finish
 			//AppContext.getInstance().mRequestQueue.start();
 	}
 
-	@Override
-	protected void onRestart() {
-		super.onRestart();
-	}
+
 
 	/**
 	 * Activity的回调函数。当application进入后台时，该函数会被自动调用。
@@ -198,7 +220,6 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Finish
 		//退出排队的请求
 		if(NetContext.getInstance()!=null)
 			NetContext.getInstance().cancelAll(this);
-
 		super.onDestroy();
 	}
 
@@ -280,7 +301,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Finish
 	 * @return
 	 */
 	public String getEditTextString(EditText e) {
-		String str = "";
+		String str;
 		str = (e == null ? "" : e.getText().toString().trim());
 		return str;
 	}
@@ -297,7 +318,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Finish
 	}
 
 	/**
-	 * 隐藏视图但它占据了空�? *
+	 * 隐藏视图但它占据了空间 INVISIBLE *
 	 *
 	 * @param v
 	 */
@@ -319,7 +340,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Finish
 	}
 
 	/**
-	 * �?��视图
+	 * enable视图
 	 *
 	 * @param v
 	 */
@@ -388,7 +409,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Finish
 	 */
 	public void printError(String Message) {
 		if (Message != null) {
-			Log.e(TAG, Message);
+			KLog.e(TAG, Message);
 		}
 	}
 
@@ -402,5 +423,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements Finish
 		}
 		return str;
 	}
+
+
 
 }

@@ -14,6 +14,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.socks.library.KLog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -221,6 +222,10 @@ public class OKHttpUtil {
                     public void onResponse(String response) {
                         //在这里操作UI组件是安全的，因为响应返回时这个函数会被post到UI线程来执行
                         // 在这里尽情蹂躏响应的String。
+                        if (res != null) {
+                            res.onSuccess(response);
+                            res.onFinish();
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -304,6 +309,7 @@ public class OKHttpUtil {
                     @Override
                     public void onResponse(String response) {
                         if (res != null) {
+                            //KLog.i(response);
                             try {
                                 res.onSuccess(new JSONObject(response));
                             } catch (Exception e) {

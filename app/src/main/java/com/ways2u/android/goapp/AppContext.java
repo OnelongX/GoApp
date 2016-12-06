@@ -13,7 +13,7 @@ public class AppContext extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        //NetContext.init(this);
+        NetContext.init(this);
         KLog.init(BuildConfig.LOG_DEBUG, "OL");
     }
 }
