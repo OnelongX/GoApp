@@ -12,6 +12,7 @@ import com.ways2u.android.net.util.OKHttpUtil;
  */
 
 public class MeiziApi {
+
     public static void getMeiziList(BaseActivity context,int page,JsonCallback jsonCallback){
         new OKHttpUtil(context).get("http://gank.io/api/data/%E7%A6%8F%E5%88%A9/10/"+page, jsonCallback);
     }
